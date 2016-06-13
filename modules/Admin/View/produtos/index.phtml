@@ -1,0 +1,45 @@
+<div class="page-header">
+    <h1>Gerenciar Produtos <small>total <?=count($this->produtos) ?></small></h1>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Produtos cadastrados
+        <a href="<?=$this->url('produtos', 'create', array(), true) ?>" class="btn btn-success produtos-action-create">
+            <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+            <span class="hidden-xs">Cadastrar</span>
+        </a>
+    </div>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="produtos-col-id">#</th>
+                <th class="produtos-col-nome">Nome</th>
+                <th class="produtos-col-valor">Valor</th>
+                <th class="produtos-col-categoria">Categoria</th>
+                <th class="produtos-col-action">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->produtos as $produto) : ?>
+            <tr>
+                <td class="produtos-col-id"><?=$produto->getId() ?></td>
+                <td class="produtos-col-nome"><?=$produto->getNome() ?></td>
+                <td class="produtos-col-valor">R$ <?=number_format($produto->getValor(), 2, ',', '.') ?></td>
+                <td class="produtos-col-categoria">
+                    <?=$this->categorias[$produto->getCategoria()]->getNome() ?>
+                </td>
+                <td class="produtos-col-action">
+                    <a href="#" class="btn btn-primary" title="Editar Produto">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        <span class="hidden-xs">Editar</span>
+                    </a>
+                    <a href="#" class="btn btn-danger" title="Remover Produto">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        <span class="hidden-xs">Remover</span>
+                    </a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
