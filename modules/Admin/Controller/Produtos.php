@@ -23,6 +23,16 @@ class Produtos extends AbstractController{
             $produto->setDescricao($this->app()->request()->getPost('produto-descricao'));
             $produto->setRemovido(false);
 
+            $thumbnail = $this->getFile('produto-imagem');
+            if($thumbnail !== null){
+                $produto->setThumbnail($thumbnail['blob']);
+                $produto->setThumbnailType($thumbnail['type']);
+            }
+            else if($this->app()->request()->hasPost('produto-imagem-reupdate')){
+                $produto->setThumbnail($this->app()->request()->getPost('produto-imagem-reupdate'));
+                $produto->setThumbnailType($this->app()->request()->getPost('produto-imagem-reupdate-type'));
+            }
+
             if($produto->save()){
                 return self::getView(
                     array('message' => 'O produto foi cadastrado com sucesso.'),
@@ -47,4 +57,15 @@ class Produtos extends AbstractController{
         foreach($categoriasModels as $c) $categorias[$c->getId()] = $c;
         return $categorias;
     }
+
+    protected function getFile($key){
+
+        if(!isset($_FILES[$key]) || $_FILES[$key]['error'] !== 0) return null;
+
+        return array(
+            'blob' => base64_encode(file_get_contents($_FILES[$key]['tmp_name'])),
+            'type' => $_FILES[$key]['type']
+        );
+    }
+
 }

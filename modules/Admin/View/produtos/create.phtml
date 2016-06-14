@@ -9,7 +9,7 @@
 <?php endif; ?>
 
 
-<form style="max-width: 500px; margin: 0 auto 50px;" method="post">
+<form style="max-width: 500px; margin: 0 auto 50px;" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="produto-nome">Nome do produto</label>
         <input name="produto-nome" type="text" class="form-control" id="produto-nome" value="<?=($this->produto !== null ? $this->produto->getNome() : '') ?>">
@@ -38,9 +38,18 @@
 
     <div class="form-group">
         <label for="produto-imagem">Imagem do Produto</label>
+
+        <?php if($this->produto !== null && $this->produto->getThumbnail() != null) : ?>
+            <input type="hidden" name="produto-imagem-reupdate" value="<?=$this->produto->getThumbnail() ?>">
+            <input type="hidden" name="produto-imagem-reupdate-type" value="<?=$this->produto->getThumbnailType() ?>">
+        <?php endif; ?>
         <input name="produto-imagem" type="file" class="form-control" id="produto-imagem">
         <div id="produto-thumbnail" class="thumbnail">
-            <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=900%C3%97500&w=500&h=500">
+            <?php if($this->produto !== null && $this->produto->getThumbnail() != null) : ?>
+                <img src="data:<?=$this->produto->getThumbnailType().';base64,'.$this->produto->getThumbnail() ?>">
+            <?php else : ?>
+                <img src="<?=$this->app()->request()->getBaseUri() ?>img/sem-foto.png">
+            <?php endif; ?>
         </div>
     </div>
 
@@ -49,3 +58,18 @@
         <a class="btn btn-danger" href="<?=$this->url('produtos', 'index', array(), true) ?>">Voltar</a>
     </div>
 </form>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        $('#produto-imagem').change(function(){
+            file = this.files[0];
+            if(!file) return;
+            reader = new FileReader();
+            reader.onload = function (data) {
+                $('#produto-thumbnail img').attr('src', data.target.result);
+            };
+            reader.readAsDataURL(file);
+            $('input[name=produto-imagem-reupdate], input[name=produto-imagem-reupdate-type]').remove();
+        });
+    });
+</script>

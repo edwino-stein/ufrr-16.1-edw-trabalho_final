@@ -40,6 +40,18 @@ class Produto extends ModelBase{
     protected $categoria;
 
     /**
+     * @var string
+     * @column thumbnail
+     */
+    protected $thumbnail;
+
+    /**
+     * @var string
+     * @column thumbnail_mime
+     */
+    protected $thumbnailType;
+
+    /**
      * @var bool
      * @column removido
      */
@@ -64,6 +76,14 @@ class Produto extends ModelBase{
 
     public function getCategoria(){
         return $this->categoria;
+    }
+
+    public function getThumbnail(){
+        return $this->thumbnail;
+    }
+
+    public function getThumbnailType(){
+        return $this->thumbnailType;
     }
 
     public function getRemovido(){
@@ -100,4 +120,13 @@ class Produto extends ModelBase{
         return $this;
     }
 
+    public function setThumbnail($thumbnail){
+        $this->thumbnail = $thumbnail;
+        return $this;
+    }
+
+    public function setThumbnailType($thumbnailType){
+        $this->thumbnailType = $thumbnailType;
+        return $this;
+    }
 }
