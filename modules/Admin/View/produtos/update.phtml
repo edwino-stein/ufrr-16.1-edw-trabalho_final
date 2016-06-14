@@ -1,0 +1,77 @@
+<div class="page-header">
+    <h1>Editar Produto <small>(#<?=($this->produto !== null ? $this->produto->getId() : '0') ?>)</small></h1>
+</div>
+
+<?php if($this->error !== null) : ?>
+    <div class="alert alert-danger" role="alert">
+        <?=$this->error ?>
+    </div>
+<?php endif; ?>
+
+
+<form style="max-width: 500px; margin: 0 auto 50px;" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="produto-nome">Nome do produto</label>
+        <input name="produto-nome" type="text" class="form-control" id="produto-nome" value="<?=($this->produto !== null ? $this->produto->getNome() : '') ?>">
+    </div>
+
+    <div class="form-group">
+        <label for="produto-valor">Valor do produto</label>
+        <input name="produto-valor" type="number" min="0.1" step="any" class="form-control" id="produto-valor" value="<?=($this->produto !== null ? $this->produto->getValor() : '') ?>">
+    </div>
+
+    <div class="form-group">
+        <label for="produto-categoria">Categoria do produto</label>
+        <select name="produto-categoria" id="produto-categoria" class="form-control">
+            <?php foreach($this->categorias as $categoria) : ?>
+                <option value="<?=$categoria->getId() ?>" <?=($this->produto !== null && $this->produto->getCategoria() == $categoria->getId() ? 'selected' : '') ?>>
+                    <?=$categoria->getNome() ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="produto-descricao">Descrição do produto</label>
+        <textarea id="produto-descricao" name="produto-descricao" class="form-control" style="height: 200px; resize: none;"><?=($this->produto !== null ? $this->produto->getDescricao() : '') ?></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="produto-imagem">Imagem do Produto</label>
+
+        <?php if($this->produto !== null && $this->produto->getThumbnail() != null) : ?>
+            <input type="hidden" name="produto-imagem-reupdate" value="<?=$this->produto->getThumbnail() ?>">
+            <input type="hidden" name="produto-imagem-reupdate-type" value="<?=$this->produto->getThumbnailType() ?>">
+        <?php endif; ?>
+        <input name="produto-imagem" type="file" class="form-control" id="produto-imagem">
+        <div id="produto-thumbnail" class="thumbnail">
+            <?php if($this->produto !== null && $this->produto->getThumbnail() != null) : ?>
+                <img src="data:<?=$this->produto->getThumbnailType().';base64,'.$this->produto->getThumbnail() ?>">
+            <?php else : ?>
+                <img src="<?=$this->app()->request()->getBaseUri() ?>img/sem-foto.png">
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <input type="hidden" name="produto-id" value="<?=($this->produto !== null ? $this->produto->getId() : '') ?>">
+
+    <div style="text-align: center">
+        <button name="produto-salvar" type="submit" class="btn btn-success">Salvar</button>
+        <a class="btn btn-danger" href="<?=$this->url('produtos', 'index', array(), true) ?>">Voltar</a>
+    </div>
+</form>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        $('#produto-imagem').change(function(){
+            file = this.files[0];
+            if(!file) return;
+            reader = new FileReader();
+            reader.onload = function (data) {
+                $('#produto-thumbnail img').attr('src', data.target.result);
+            };
+            reader.readAsDataURL(file);
+            $('input[name=produto-imagem-reupdate], input[name=produto-imagem-reupdate-type]').remove();
+        });
+    });
+</script>

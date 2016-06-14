@@ -29,7 +29,7 @@
                     <?=$this->categorias[$produto->getCategoria()]->getNome() ?>
                 </td>
                 <td class="produtos-col-action">
-                    <a href="#" class="btn btn-primary" title="Editar Produto">
+                    <a href="<?=$this->url('produtos', 'update', array('produto_id' => $produto->getId()), true) ?>" class="btn btn-primary" title="Editar Produto">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         <span class="hidden-xs">Editar</span>
                     </a>
