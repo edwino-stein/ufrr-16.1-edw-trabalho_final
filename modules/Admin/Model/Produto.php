@@ -59,7 +59,7 @@ class Produto extends ModelBase{
     }
 
     public function getValor(){
-        return $this->valors;
+        return $this->valor;
     }
 
     public function getCategoria(){
@@ -85,8 +85,8 @@ class Produto extends ModelBase{
         return $this;
     }
 
-    public function setValor($valors){
-        $this->valors = (float) $valors;
+    public function setValor($valor){
+        $this->valor = (float) $valor;
         return $this;
     }
 
