@@ -1,0 +1,22 @@
+<div class="page-header">
+    <h1>Cadastrar Categoria</h1>
+</div>
+
+<?php if($this->error !== null) : ?>
+    <div class="alert alert-danger" role="alert">
+        <?=$this->error ?>
+    </div>
+<?php endif; ?>
+
+
+<form style="max-width: 500px; margin: 0 auto 50px;" method="post">
+    <div class="form-group">
+        <label for="categoria-nome">Nome da categoria</label>
+        <input name="categoria-nome" type="text" class="form-control" id="categoria-nome" value="<?=($this->categoria !== null ? $this->categoria->getNome() : '') ?>">
+    </div>
+
+    <div style="text-align: center">
+        <button name="categoria-salvar" type="submit" class="btn btn-success">Salvar</button>
+        <a class="btn btn-danger" href="<?=$this->url('categorias', 'index', array(), true) ?>">Voltar</a>
+    </div>
+</form>
