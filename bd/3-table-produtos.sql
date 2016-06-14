@@ -5,6 +5,8 @@ CREATE TABLE `web_final1`.`produtos` (
     `valor` FLOAT NOT NULL,
     `categoria` INT NOT NULL,
     `removido` BOOLEAN NOT NULL,
+    `thumbnail` LONGBLOB NULL,
+    `thumbnail_mime` VARCHAR(20) NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
