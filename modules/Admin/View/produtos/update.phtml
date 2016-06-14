@@ -8,8 +8,7 @@
     </div>
 <?php endif; ?>
 
-
-<form style="max-width: 500px; margin: 0 auto 50px;" method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="produto-nome">Nome do produto</label>
         <input name="produto-nome" type="text" class="form-control" id="produto-nome" value="<?=($this->produto !== null ? $this->produto->getNome() : '') ?>">
@@ -43,7 +42,9 @@
             <input type="hidden" name="produto-imagem-reupdate" value="<?=$this->produto->getThumbnail() ?>">
             <input type="hidden" name="produto-imagem-reupdate-type" value="<?=$this->produto->getThumbnailType() ?>">
         <?php endif; ?>
+
         <input name="produto-imagem" type="file" class="form-control" id="produto-imagem">
+
         <div id="produto-thumbnail" class="thumbnail">
             <?php if($this->produto !== null && $this->produto->getThumbnail() != null) : ?>
                 <img src="data:<?=$this->produto->getThumbnailType().';base64,'.$this->produto->getThumbnail() ?>">
@@ -51,14 +52,16 @@
                 <img src="<?=$this->app()->request()->getBaseUri() ?>img/sem-foto.png">
             <?php endif; ?>
         </div>
+
     </div>
 
     <input type="hidden" name="produto-id" value="<?=($this->produto !== null ? $this->produto->getId() : '') ?>">
 
-    <div style="text-align: center">
+    <div class="form-actions">
         <button name="produto-salvar" type="submit" class="btn btn-success">Salvar</button>
         <a class="btn btn-danger" href="<?=$this->url('produtos', 'index', array(), true) ?>">Voltar</a>
     </div>
+
 </form>
 
 <script type="text/javascript">
