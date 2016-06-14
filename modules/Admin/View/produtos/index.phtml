@@ -33,7 +33,7 @@
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         <span class="hidden-xs">Editar</span>
                     </a>
-                    <a href="#" class="btn btn-danger" title="Remover Produto">
+                    <a href="<?=$this->url('produtos', 'delete', array('produto_id' => $produto->getId()), true) ?>" class="btn btn-danger" title="Remover Produto">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         <span class="hidden-xs">Remover</span>
                     </a>

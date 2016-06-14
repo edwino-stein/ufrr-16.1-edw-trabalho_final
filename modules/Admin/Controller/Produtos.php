@@ -100,6 +100,32 @@ class Produtos extends AbstractController{
         ));
     }
 
+    public function deleteAction(){
+
+        if(!$this->app()->request()->hasQuery('produto_id')){
+            return 'Nenhum produto especificado';
+        }
+
+        $id = $this->app()->request()->getQuery('produto_id');
+        $produto = Produto::findOneBy(array('id' => $id));
+
+        if($produto === null){
+            return 'Nenhum produto especificado';
+        }
+
+        $produto->setRemovido(true);
+
+        if($produto->save()){
+            return self::getView(
+                array('message' => 'O produto foi removido com sucesso.'),
+                'produtos/operation-success.phtml'
+            );
+        }
+        else{
+            return 'Ocorreu algum erro durante a operação.';
+        }
+    }
+
     protected function getCategorias(){
         $categoriasModels = Categoria::fetchAll();
         $categorias = array();
