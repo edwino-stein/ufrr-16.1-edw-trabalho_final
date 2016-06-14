@@ -45,7 +45,7 @@ class Produtos extends AbstractController{
         }
 
         return self::getView(array(
-            'categorias' => $this->getCategorias(),
+            'categorias' => $this->getCategorias(false),
             'error' => $error,
             'produto' => $produto
         ));
@@ -126,8 +126,13 @@ class Produtos extends AbstractController{
         }
     }
 
-    protected function getCategorias(){
-        $categoriasModels = Categoria::fetchAll();
+    protected function getCategorias($removed = true){
+
+        if($removed)
+            $categoriasModels = Categoria::fetchAll();
+        else
+            $categoriasModels = Categoria::findBy(array('removido' => false));
+
         $categorias = array();
         foreach($categoriasModels as $c) $categorias[$c->getId()] = $c;
         return $categorias;
