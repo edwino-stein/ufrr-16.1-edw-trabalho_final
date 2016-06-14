@@ -71,7 +71,31 @@ class Categorias extends AbstractController{
             'error' => $error,
             'categoria' => $categoria
         ));
+    }
 
+    public function deleteAction(){
 
+        if(!$this->app()->request()->hasQuery('categoria_id')){
+            return 'Nenhuma categoria especificada';
+        }
+
+        $id = $this->app()->request()->getQuery('categoria_id');
+        $categoria = Categoria::findOneBy(array('id' => $id));
+
+        if($categoria === null){
+            return 'Nenhuma categoria especificada';
+        }
+
+        $categoria->setRemovido(true);
+
+        if($categoria->save()){
+            return self::getView(
+                array('message' => 'A categoria foi removida com sucesso.'),
+                'categorias/operation-success.phtml'
+            );
+        }
+        else{
+            return 'Ocorreu algum erro durante a operação.';
+        }
     }
 }
