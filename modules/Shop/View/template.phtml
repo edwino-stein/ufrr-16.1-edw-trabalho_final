@@ -2,6 +2,7 @@
     use Admin\Model\Categoria;
     $route = $this->app()->request()->getRoute();
     $isHome = $route == '/' || $route == '/shop/index';
+    $categoriaId = (int) $isHome ? -1 : $this->app()->request()->getQuery('categoria', -1);
     $baseUri = $this->app()->request()->getBaseUri();
     $categorias = Categoria::findBy(array('removido' => false));
 ?>
@@ -40,7 +41,7 @@
                             <a href="<?= $baseUri.'index.php' ?>">Início</a>
                         </li>
                         <?php foreach ($categorias as $item) : ?>
-                            <li>
+                            <li <?=$item->getId() == $categoriaId ? 'class="active"' : '' ?> >
                                 <a href="<?=$this->url('shop', 'categoria', array('categoria' => $item->getId()), true) ?>">
                                     <?=$item->getNome() ?>
                                 </a>

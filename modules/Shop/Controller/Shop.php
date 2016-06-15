@@ -31,6 +31,16 @@ class Shop extends AbstractController{
         return self::getView(array('produto' => $produto));
     }
 
+    public function categoriaAction(){
+
+        $categoriaId = $this->app()->request()->getQuery('categoria');
+        $categoria = Categoria::findOneBy(array('removido' => false, 'id' => $categoriaId));
+        if($categoria == null) return self::getView(array(), 'shop/categoria-invalida.phtml');
+
+        $produtos = ProdutoView::findBy(array('removido' => false, 'categoria' => $categoriaId));
+        return self::getView(array('produtos' => $produtos, 'categoria' => $categoria));
+    }
+
     public function thumbnailAction(){
 
         $this->template = null;
