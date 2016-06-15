@@ -1,10 +1,84 @@
+<?php
+    use Admin\Model\Categoria;
+    $route = $this->app()->request()->getRoute();
+    $isHome = $route == '/' || $route == '/shop/index';
+    $baseUri = $this->app()->request()->getBaseUri();
+    $categorias = Categoria::findBy(array('removido' => false));
+?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="<?=$this->charset ?>">
         <title><?=$this->title ?></title>
+        <meta charset="utf-8">
+
+        <!--Styles -->
+        <link rel="stylesheet" href="<?=$baseUri ?>/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<?=$baseUri ?>/css/shop.css">
+
+        <!-- Scripts -->
+        <script type="text/javascript" src="<?=$baseUri ?>js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="<?=$baseUri ?>js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="<?=$baseUri ?>js/navbar.js"></script>
     </head>
     <body>
-        <?=$this->content ?>
+
+        <nav class="navbar navbar-custom">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-links" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Brand</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-links">
+                    <ul id="navbar-links-container" class="nav navbar-nav navbar-left" style="position: absolute; left: 79px;">
+                        <li <?= $isHome ? 'class="active"' : '' ?> >
+                            <a href="<?= $baseUri.'index.php' ?>">Início</a>
+                        </li>
+                        <?php foreach ($categorias as $item) : ?>
+                            <li>
+                                <a href="<?=$this->url('shop', 'categoria', array('categoria' => $item->getId()), true) ?>">
+                                    <?=$item->getNome() ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </a>
+                            <ul class="dropdown-menu"></ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="navbar-cart">
+                            <a href="#">
+                                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                                <span class="visible-xs-inline">Carrinho</span>
+                                <span class="badge visible-xs-inline">42</span>
+                            </a>
+                            <span class="cart-badge hidden-xs">12</span>
+                        </li>
+                    </ul>
+                    <form id="navbar-search" class="navbar-form navbar-right" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Procurando alguma coisa?">
+                            <button type="submit" class="btn">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <div id="main-container" class="container container-fluid">
+            <?=$this->content ?>
+        </div>
     </body>
 </html>
