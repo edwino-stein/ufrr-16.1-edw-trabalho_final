@@ -1,6 +1,8 @@
 <?php
 namespace Shop\Controller;
+
 use Application\AbstractController;
+use DataBase\Where;
 use Admin\Model\Categoria;
 use Shop\Model\ProdutoView;
 use Shop\Model\ProdutoThumbnail;
@@ -39,6 +41,16 @@ class Shop extends AbstractController{
 
         $produtos = ProdutoView::findBy(array('removido' => false, 'categoria' => $categoriaId));
         return self::getView(array('produtos' => $produtos, 'categoria' => $categoria));
+    }
+
+    public function pesquisaAction(){
+        $busca = $this->app()->request()->getQuery('buscar', '');
+
+        if(empty($busca)) $produtos = array();
+        else $produtos = ProdutoView::findBy(new Where('nome like :nome and removido = :removido', array('nome' => '%'.$busca.'%', 'removido' => false)));
+        
+        $total = count($produtos);
+        return self::getView(array('produtos' => $produtos, 'total' => $total));
     }
 
     public function thumbnailAction(){

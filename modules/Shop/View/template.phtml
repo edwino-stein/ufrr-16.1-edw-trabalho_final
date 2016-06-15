@@ -3,6 +3,7 @@
     $route = $this->app()->request()->getRoute();
     $isHome = $route == '/' || $route == '/shop/index';
     $categoriaId = (int) $isHome ? -1 : $this->app()->request()->getQuery('categoria', -1);
+    $buscar = (int) $isHome ? '' : $this->app()->request()->getQuery('buscar', '');
     $baseUri = $this->app()->request()->getBaseUri();
     $categorias = Categoria::findBy(array('removido' => false));
 ?>
@@ -67,9 +68,9 @@
                             <span class="cart-badge hidden-xs">12</span>
                         </li>
                     </ul>
-                    <form id="navbar-search" class="navbar-form navbar-right" role="search">
+                    <form id="navbar-search" class="navbar-form navbar-right" role="search" action="<?=$this->url('shop', 'pesquisa', array(), true) ?>" method="get">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Procurando alguma coisa?">
+                            <input type="text" name="buscar" class="form-control" placeholder="Procurando alguma coisa?" value="<?=$buscar ?>">
                             <button type="submit" class="btn">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                             </button>

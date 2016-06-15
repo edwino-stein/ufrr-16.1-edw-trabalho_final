@@ -1,0 +1,39 @@
+<div class="container-fluid">
+
+    <div class="page-header">
+        <h1>Resultados da pesquisa <small>(<?=$this->total ?>)</small></h1>
+    </div>
+
+    <?php if($this->total <= 0) : ?>
+        <div class="alert alert-info" role="alert" style="max-width: 500px; margin: 20px auto; text-align: center;">
+            <h4 style="margin: 0">Nenhum resultado encontrado.</h4>
+        </div>
+    <?php endif; ?>
+
+    <?php foreach ($this->produtos as $produto) :?>
+        <div class="col-xs-12 col-sm-4 col-md-3">
+            <div class="thumbnail produto">
+                <div class="produto-thumbnail" style="background-image: url('<?= $this->url('shop', 'thumbnail', array('produto_id' => $produto->getId()), true) ?>')"></div>
+                <div class="caption container-fluid">
+                    <a href="<?= $this->url('shop', 'produto', array('produto_id' => $produto->getId()), true) ?>" class="produto-nome" title="<?=$produto->getNome() ?>">
+                        <?=$produto->getNome() ?>
+                    </a>
+                    <p class="produto-valor">R$ <?=number_format($produto->getValor(), 2, ',', '.') ?></p>
+                    <div class="produto-acoes col-xs-12">
+                        <div class="col-sm-6">
+                            <a href="#" class="btn btn-primary-custom btn-block" role="button">
+                                Comprar
+                            </a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="<?= $this->url('shop', 'produto', array('produto_id' => $produto->getId()), true) ?>" class="btn btn-default btn-block" role="button">
+                                Visualizar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+
+</div>
