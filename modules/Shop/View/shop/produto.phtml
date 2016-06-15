@@ -1,0 +1,20 @@
+
+<div class="page-header">
+    <h1><?=$this->produto->getNome() ?></h1>
+</div>
+
+<div id="thumbnail" class="col-xs-12 col-sm-4" style="text-align: center">
+    <div class="produto-thumbnail" style="background-image: url('<?= $this->url('shop', 'thumbnail', array('produto_id' => $this->produto->getId()), true) ?>')"></div>
+</div>
+
+<div id="produto-info" class="col-xs-12 col-sm-8">
+    <h3>R$ <?=number_format($this->produto->getValor(), 2, ',', '.') ?></h3>
+    <a href="#" class="btn btn-primary-custom btn-block btn-lg">Comprar</a>
+</div>
+
+<div class="col-xs-12">
+    <div class="page-header">
+        <h3>Descrição</h3>
+    </div>
+    <div id="produto-descricao" class="col-xs-12"><?=$this->produto->getDescricao() ?></div>
+</div>

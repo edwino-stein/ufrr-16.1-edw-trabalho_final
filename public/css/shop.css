@@ -340,3 +340,23 @@ body{
     background-color: #D84315;
     border-color: #BF360C;
 }
+
+#thumbnail .produto-thumbnail{
+    height: 197px;
+    width: 100%;
+    max-width: 197px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+#produto-info{
+    text-align: center;
+    padding: 49px 65px;
+}
+
+#produto-descricao{
+    text-align: justify;
+    margin-bottom: 20px;
+}
