@@ -1,0 +1,33 @@
+<div class="page-header">
+    <h1>Produtos no carrinho <small>(<?=$this->total ?>)</small></h1>
+    <a class="btn btn-link" href="<?=$this->url('cart', 'clear', array(), true) ?>">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    </a>
+</div>
+
+<?php if($this->total <= 0) : ?>
+    <div class="alert alert-info" role="alert" style="max-width: 500px; margin: 20px auto; text-align: center;">
+        <h4 style="margin: 0">Nenhum produto no carrinho.</h4>
+    </div>
+<?php endif; ?>
+
+<div class="container-fluid">
+
+    <?php foreach ($this->itens as $item) :?>
+        <div class="col-xs-12 cart-item" >
+            <div class="col-xs-3 col-lg-2" style="text-align: center; border-bottom: 1px solid #b9b9b9" >
+                <div class="produto-thumbnail" style="background-image: url('<?= $this->url('shop', 'thumbnail', array('produto_id' => $item->getId()), true) ?>')"></div>
+            </div>
+            <div class="col-xs-6 col-lg-8" style="padding: 50px 15px; border-bottom: 1px solid #b9b9b9" >
+                <a href="<?= $this->url('shop', 'produto', array('produto_id' => $item->getId()), true) ?>" class="produto-nome">
+                    <?=$item->getNome(); ?>
+                </a>
+            </div>
+            <div class="col-xs-3 col-lg-2" style="padding: 51px 15px 52px; border-bottom: 1px solid #b9b9b9" >
+                <p class="produto-valor">
+                    R$ <?=number_format($item->getValor(), 2, ',', '.') ?>
+                </p>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>

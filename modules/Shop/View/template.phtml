@@ -2,6 +2,8 @@
     use Admin\Model\Categoria;
     $route = $this->app()->request()->getRoute();
     $isHome = $route == '/' || $route == '/shop/index';
+    $isCart = !$isHome && ($route == '/cart' || $route == '/cart/index');
+    $cartCount = count($_SESSION['cart']);
     $categoriaId = (int) $isHome ? -1 : $this->app()->request()->getQuery('categoria', -1);
     $buscar = (int) $isHome ? '' : $this->app()->request()->getQuery('buscar', '');
     $baseUri = $this->app()->request()->getBaseUri();
@@ -59,13 +61,18 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li id="navbar-cart">
-                            <a href="#">
+                        <li id="navbar-cart" <?= $isCart ? 'class="active"' : '' ?> >
+                            <a href="<?=$this->url('cart', 'index', array(), true) ?>">
                                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                                 <span class="visible-xs-inline">Carrinho</span>
-                                <span class="badge visible-xs-inline">42</span>
+                                <?php if($cartCount > 0) : ?>
+                                    <span class="badge visible-xs-inline"><?=$cartCount ?></span>
+                                <?php endif; ?>
+
                             </a>
-                            <span class="cart-badge hidden-xs">12</span>
+                            <?php if($cartCount > 0) : ?>
+                                <span class="cart-badge hidden-xs"><?=$cartCount ?></span>
+                            <?php endif; ?>
                         </li>
                     </ul>
                     <form id="navbar-search" class="navbar-form navbar-right" role="search" action="<?=$this->url('shop', 'pesquisa', array(), true) ?>" method="get">

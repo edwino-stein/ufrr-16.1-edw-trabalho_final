@@ -9,7 +9,9 @@
 
 <div id="produto-info" class="col-xs-12 col-sm-8">
     <h3>R$ <?=number_format($this->produto->getValor(), 2, ',', '.') ?></h3>
-    <a href="#" class="btn btn-primary-custom btn-block btn-lg">Comprar</a>
+    <a href="<?= $this->url('cart', 'index', array('add' => $this->produto->getId()), true) ?>" class="btn btn-primary-custom btn-block btn-lg">
+        Comprar
+    </a>
 </div>
 
 <div class="col-xs-12">

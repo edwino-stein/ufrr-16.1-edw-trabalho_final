@@ -3,6 +3,13 @@ namespace Shop;
 use Application\Application;
 
 class Shop extends Application{
+
+    protected function init(){
+        session_start();
+        if(!isset($_SESSION['cart'])) $_SESSION['cart'] = array();
+        parent::init();
+    }
+
     protected $config = array(
         'db' => array(
             'driver' => 'mysql',

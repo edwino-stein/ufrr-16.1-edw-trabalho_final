@@ -15,7 +15,7 @@
                     <p class="produto-valor">R$ <?=number_format($produto->getValor(), 2, ',', '.') ?></p>
                     <div class="produto-acoes col-xs-12">
                         <div class="col-sm-6">
-                            <a href="#" class="btn btn-primary-custom btn-block" role="button">
+                            <a href="<?= $this->url('cart', 'index', array('add' => $produto->getId()), true) ?>" class="btn btn-primary-custom btn-block" role="button">
                                 Comprar
                             </a>
                         </div>
